@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,17 +13,22 @@ namespace ClientServer
         {
             IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            Console.WriteLine("Start server...");
             try
             {
                 socket.Bind(iPEndPoint);
                 socket.Listen(10);
 
-                Console.WriteLine("Start server...");
-
                 while (true)
                 {
                     Socket socketClient = socket.Accept();
+
+                    socketClient.Send(Encoding.Unicode.GetBytes("Welcome on server!"));
+
+
                     StringBuilder stringBuilder = new StringBuilder();
+
                     int bytes = 0;
                     byte[] data = new byte[256];
 
@@ -33,14 +39,18 @@ namespace ClientServer
                     } while (socketClient.Available > 0);
 
                     Console.WriteLine($"MSG: {stringBuilder.ToString()}");
+                    List<int> numbs = new List<int>();
+
+                    Console.WriteLine(stringBuilder.ToString().Split(',')[0] + stringBuilder.ToString().Split(',')[1]);
+
+                    socketClient.Shutdown(SocketShutdown.Both);
+                    socketClient.Close();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            Console.WriteLine("Hello World!");
-          
         }
     }
 }

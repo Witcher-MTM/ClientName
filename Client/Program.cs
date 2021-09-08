@@ -43,8 +43,8 @@ namespace Client
                 Console.WriteLine(ex.Message);
             }
             Console.WriteLine("Hello World!");
-        }
 
+        }
     }
     
 }
