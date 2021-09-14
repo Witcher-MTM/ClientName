@@ -22,27 +22,27 @@ namespace Client
                 byte[] data = new byte[256];
                 StringBuilder stringBuilder = new StringBuilder();
 
-                do
-                {
-                    bytes = socket.Receive(data);
-                    stringBuilder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                } while (socket.Available > 0);
-                Console.WriteLine(stringBuilder.ToString());
-
-
-                Console.Write("Enter msg for server:");
+                Console.Write("Enter text:");
                 string sms = Console.ReadLine();
                 data = Encoding.Unicode.GetBytes(sms);
 
                 socket.Send(data);
 
                 Console.WriteLine($"Sms \"{sms}\" send to SERVER [{ipAddr}]!");
+
+                do
+                {
+                    bytes = socket.Receive(data);
+                    stringBuilder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                } while (socket.Available > 0);
+
+                Console.WriteLine(stringBuilder.ToString());
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("SHLUxa");
             }
-            Console.WriteLine("Hello World!");
+         
 
         }
     }
