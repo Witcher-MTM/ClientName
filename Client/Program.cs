@@ -40,7 +40,7 @@ namespace Client
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SHLUxa");
+                Console.WriteLine(ex.Message);
             }
          
 

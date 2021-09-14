@@ -69,7 +69,7 @@ namespace ClientServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Shluxa");
+                Console.WriteLine(ex.Message);
             }
         }
     }
