@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -22,13 +23,22 @@ namespace Client
                 byte[] data = new byte[256];
                 StringBuilder stringBuilder = new StringBuilder();
 
-                Console.Write("Enter text:");
+                Console.Write("Enter path: ");
                 string sms = Console.ReadLine();
-                data = Encoding.Unicode.GetBytes(sms);
+                try
+                {
+                    data = File.ReadAllBytes(sms);
 
-                socket.Send(data);
+                    socket.Send(data);
+                    Console.WriteLine(File.ReadAllText(sms));
+                    Console.WriteLine($"Sms \"{sms}\" send to SERVER [{ipAddr}]!");
+                }
+                catch (Exception)
+                {
 
-                Console.WriteLine($"Sms \"{sms}\" send to SERVER [{ipAddr}]!");
+                    throw;
+                }
+              
 
                 do
                 {
@@ -40,7 +50,7 @@ namespace Client
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SHLUxa");
+                Console.WriteLine("Error");
             }
          
 

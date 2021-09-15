@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -38,38 +39,22 @@ namespace ClientServer
                     do
                     {
                         bytes = socketClient.Receive(data);
-                        stringBuilder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                       
+                        File.WriteAllBytes(DateTime.Now.ToString().Replace('.', '_').Replace(':', '_').Replace(' ', '_') + ".txt", data);
+
                     } while (socketClient.Available > 0);
 
-
-                    Console.WriteLine($"MSG: {stringBuilder.ToString()}");
-
-                    arr = stringBuilder.ToString().Split(' ');
-
-                    foreach (var item in arr)
-                    {
-                        if (!words_count.ContainsKey(item))
-                        {
-                            words_count.Add(item, 1);
-                        }
-                        else
-                        {
-                            words_count[item]++;
-                        }
-                    }
-                    for (int i = 0; i < words_count.Count; i++)
-                    {
-                        str += words_count.ElementAt(i).Key + " "+ words_count.ElementAt(i).Value + "\n";
-                    }
-                  
-                    socketClient.Send(Encoding.Unicode.GetBytes(str));
                    
-                   
+
+
+
+
+
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Shluxa");
+                Console.WriteLine("Error");
             }
         }
     }
